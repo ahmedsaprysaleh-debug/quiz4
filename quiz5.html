@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار: تقنيات المعلومات للسلامة والتوقيع الرقمي ومجتمع 5.0</title>
+<style>
+  :root{--ink:#1c2b24;--paper:#f6f3ea;--panel:#ffffff;--line:#dfd8c4;--moss:#2f6b4f;--moss-dark:#234f3a;--clay:#b5502e;--ok:#2f6b4f;--bad:#b5502e;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Segoe UI","Tahoma",sans-serif;line-height:1.6;}
+  header{background:var(--moss-dark);color:#f6f3ea;padding:36px 20px 30px;text-align:center;}
+  header h1{margin:0 0 6px;font-size:26px;font-weight:700;}
+  header p{margin:0;color:#cfe3d6;font-size:14px;}
+  #progress-wrap{max-width:760px;margin:-16px auto 0;padding:0 20px;}
+  #progress-bar{height:6px;background:#e4ddc9;border-radius:4px;overflow:hidden;}
+  #progress-fill{height:100%;width:0%;background:var(--moss);transition:width .25s ease;}
+  main{max-width:760px;margin:0 auto;padding:26px 20px 60px;}
+  .intro-field{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:14px;}
+  .intro-field label{display:block;font-weight:700;margin-bottom:8px;font-size:15px;}
+  .intro-field input,.intro-field select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:6px;font-size:15px;font-family:inherit;background:#fbfaf6;}
+  .section-title{margin:34px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--moss);font-size:19px;font-weight:700;color:var(--moss-dark);}
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+  .q-text{font-weight:700;margin-bottom:12px;font-size:15.5px;}
+  .opt{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;cursor:pointer;font-size:14.5px;border:1px solid transparent;}
+  .opt:hover{background:#f1ede0;}
+  .opt input{accent-color:var(--moss);width:16px;height:16px;flex-shrink:0;}
+  .opt.correct{background:#e3f0e8;border-color:var(--ok);font-weight:700;}
+  .opt.wrong{background:#f6e6df;border-color:var(--bad);font-weight:700;}
+  #submit-btn{display:block;width:100%;padding:16px;margin-top:22px;background:var(--moss);color:#fff;border:none;border-radius:9px;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;}
+  #submit-btn:hover{background:var(--moss-dark);}
+  #result{display:none;position:sticky;top:12px;z-index:10;background:var(--moss-dark);color:#fff;padding:18px 20px;border-radius:10px;margin-bottom:20px;text-align:center;}
+  #result h2{margin:0 0 4px;font-size:24px;}
+  #result p{margin:0;color:#cfe3d6;font-size:14px;}
+  .missing{color:var(--clay);font-size:13px;margin-top:10px;display:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>الاختبار السادس - تقنيات المعلومات للسلامة والتحول الرقمي</h1>
+  <p>50 سؤالًا - إجابة كل سؤال بنقطة واحدة</p>
+</header>
+
+<div id="progress-wrap"><div id="progress-bar"><div id="progress-fill"></div></div></div>
+
+<main>
+  <form id="quiz-form">
+    <div class="intro-field"><label>الاسم الثلاثي: <span style="color:var(--clay)">*</span></label><input type="text" required></div>
+    <div class="intro-field"><label>رقم الهاتف: <span style="color:var(--clay)">*</span></label><input type="tel" required></div>
+    <div class="intro-field"><label>المجموعة: <span style="color:var(--clay)">*</span></label>
+      <select required><option value="" disabled selected>اختر مجموعتك</option><option>1</option><option>2</option><option>3</option></select>
+    </div>
+
+    <div id="result"><h2 id="score-text"></h2><p>الإجابات الصحيحة باللون الأخضر، والخاطئة باللون البرتقالي</p></div>
+
+    <div id="questions"></div>
+    <p class="missing" id="missing-msg">من فضلك أجب عن جميع الأسئلة قبل التسليم.</p>
+    <button type="submit" id="submit-btn">تسليم الاختبار</button>
+  </form>
+</main>
+
+<script>
+const section1 = [
+{t:'1- طريقة تُستخدم عند إرسال المعلومات لمنع اعتراضها وضمان وصولها للجهة المقصودة فقط تسمى:', o:['فك التشفير','التشفير (Encryption)','المفتاح','الهدف الأساسي'], a:1},
+{t:'2- عملية عكسية لتحويل النص المشفر مرة أخرى إلى شكله الأصلي كنص عادي تسمى:', o:['التشفير','فك التشفير (Decryption)','المفتاح','التجزئة'], a:1},
+{t:'3- الإجراء أو البيانات المحددة المستخدمة لإتمام عمليتي التشفير وفك التشفير بنجاح تسمى:', o:['المفتاح (Key)','الهدف الأساسي','التجزئة','التوقيع الرقمي'], a:0},
+{t:'4- الهدف الأساسي من التشفير هو:', o:['زيادة سرعة الإنترنت','ضمان أن المستلم المقصود فقط يمكنه قراءة وفهم المحتوى','تقليل حجم الملف','تحسين جودة الصورة'], a:1},
+{t:'5- النص غير المشفر الذي لم تتم معالجته بعد يسمى:', o:['Ciphertext','Plaintext','Key','Hash value'], a:1},
+{t:'6- النص الناتج عن عملية التشفير، أي غير القابل للقراءة دون مفتاح، يسمى:', o:['Plaintext','Ciphertext','Key','Hash value'], a:1},
+{t:'7- نوع التشفير الذي يستخدم نفس المفتاح المشترك (Shared Key) للتشفير وفك التشفير يسمى:', o:['التشفير المتناظر','التشفير بالمفتاح العام','التشفير الهجين','التوقيع الرقمي'], a:0},
+{t:'8- الميزة الأساسية للتشفير المتناظر هي:', o:['سهولة إدارة المفاتيح','السرعة','استخدام مفتاحين','إصدار الشهادات'], a:1},
+{t:'9- نوع التشفير الذي يستخدم مفتاحًا عامًا للتشفير ومفتاحًا خاصًا (Private Key) للمستلم لفك التشفير يسمى:', o:['التشفير المتناظر','التشفير بالمفتاح العام','دالة التجزئة','SSL فقط'], a:1},
+{t:'10- عيب التشفير بالمفتاح العام مقارنة بالمتناظر هو:', o:['أنه أسهل في الإدارة ولكنه أبطأ','أنه أسرع ولكنه أصعب في الإدارة','أنه لا يحتاج مفتاحًا','أنه غير آمن إطلاقًا'], a:0},
+{t:'11- في التشفير بالمفتاح العام، من يمتلك المفتاح الخاص؟', o:['المرسل','المستلم فقط','الجميع','أي شخص على الإنترنت'], a:1},
+{t:'12- طريقة التشفير التي تجمع بين التشفير المتماثل والتشفير بالمفتاح العام تسمى:', o:['التشفير الهجين بالمفتاح المؤقت (Session Key)','التشفير المتناظر فقط','دالة التجزئة','التوقيع الرقمي فقط'], a:0},
+{t:'13- في التشفير الهجين، يُستخدم المفتاح المتماثل لأنه:', o:['بطيء لكن آمن','سريع لتبادل المعلومات لكن توصيله بأمان مشكلة','غير قابل للاستخدام','مخصص للتوقيع فقط'], a:1},
+{t:'14- في التشفير الهجين، يُستخدم المفتاح العام (Public-key) لأنه يشبه:', o:['قفلاً موزعًا على الجميع يستخدم لإغلاق الصندوق ولكن المستلم وحده يملك مفتاح فتحه','مفتاحًا سريًا بين طرفين فقط','شهادة رقمية فقط','بروتوكول SSL فقط'], a:0},
+{t:'15- دالة تحسب قيمة فريدة بناءً على المدخلات، ومن المستحيل عمليًا استعادة النص الأصلي منها تسمى:', o:['دالة التجزئة (Hash function)','المفتاح العام','التوقيع الرقمي','جهة التصديق'], a:0},
+{t:'16- تقنية تستخدم التشفير بالمفتاح العام وقيم التجزئة لإثبات هوية المرسل وسلامة البيانات تسمى:', o:['التوقيع الرقمي','المفتاح المتناظر','دالة التجزئة فقط','SSL فقط'], a:0},
+{t:'17- في عملية التوقيع الرقمي، يقوم المرسل بـ:', o:['توليد قيمة تجزئة من النص، ثم تشفيرها بمفتاحه الخاص لإنتاج التوقيع الرقمي وإرساله مع النص','فك تشفير قيمة التجزئة فقط','إرسال النص الأصلي دون تشفير','حذف قيمة التجزئة'], a:0},
+{t:'18- في عملية التوقيع الرقمي، يقوم المستلم بـ:', o:['توليد مفتاح جديد','فك تشفير التوقيع بمفتاح المرسل العام ومقارنة قيمة التجزئة الناتجة مع تجزئة جديدة للنص','تجاهل التوقيع','حذف النص المستلم'], a:1},
+{t:'19- القيمة الناتجة عن دالة التجزئة تسمى:', o:['قيمة التجزئة (Hash value)','النص المشفر','الشهادة الرقمية','المفتاح الخاص'], a:0},
+{t:'20- أي مفتاح يستخدمه المرسل لتشفير قيمة التجزئة في التوقيع الرقمي؟', o:['العام','الخاص','المشترك','لا شيء'], a:1},
+{t:'21- منظمة طرف ثالث موثوقة تتحقق من هوية المالك وتصدر الشهادة الرقمية التي تتضمن المفتاح العام تسمى:', o:['جهة التصديق (CA)','الخادم','المتصفح','البروتوكول'], a:0},
+{t:'22- الجهة التي تصدر الشهادات الرقمية هي:', o:['الخادم','جهة التصديق (CA)','المتصفح','Big Data'], a:1},
+{t:'23- تقنيات لتشفير الاتصال بين خادم الويب والمتصفح، يظهر رمزها "https" في المتصفح تسمى:', o:['SSL/TLS','Big Data','AR','دالة التجزئة'], a:0},
+{t:'24- في المتصفح، الرمز "https" يشير إلى استخدام:', o:['AR','SSL/TLS','Big Data','التشفير المتناظر فقط'], a:1},
+{t:'25- يُستخدم مفتاح الجلسة (Session Key) ضمن بروتوكولات SSL/TLS لتأمين البيانات المتبادلة بشكل:', o:['مؤقت وسريع','دائم وبطيء','غير آمن','عشوائي بلا تشفير'], a:0}
+];
+
+const section2 = [
+{t:'26- رحلة البشرية من الأدوات الحجرية البسيطة إلى المجتمع الذكي المتكامل 5.0 تصف:', o:['تطور التكنولوجيا وتدفق المجتمعات','التشفير فقط','التوقيع الرقمي فقط','الفجوة الرقمية فقط'], a:0},
+{t:'27- مجتمع الصيادين ومجتمع الزراعة والمجتمع الصناعي تمثل أمثلة على:', o:['التسلسل التاريخي للمجتمعات في العصور السابقة','مجتمع المعلومات','Society 5.0','الذكاء الاصطناعي'], a:0},
+{t:'28- المجتمع الذي بدأ مع تقدم أجهزة الكمبيوتر والأتمتة والإنترنت في النصف الثاني من القرن العشرين يسمى:', o:['المجتمع الزراعي','مجتمع المعلومات','مجتمع الصيادين','المجتمع الصناعي'], a:1},
+{t:'29- مجتمع الجيل الخامس الذي يدمج الفضاء الافتراضي مع الفضاء الحقيقي المادي لحل المشكلات يسمى:', o:['مجتمع الصيادين','Society 5.0','مجتمع المعلومات','المجتمع الزراعي'], a:1},
+{t:'30- من أهداف Society 5.0:', o:['تحقيق التنمية الاقتصادية وحل القضايا الاجتماعية','إيقاف التطور التكنولوجي','العزلة عن الإنترنت تمامًا','إلغاء استخدام الذكاء الاصطناعي'], a:0},
+{t:'31- مجموعات البيانات الضخمة والمعقدة التي تتميز بالحجم والتنوع وسرعة التحديث (Volume، Variety، Velocity) تسمى:', o:['البيانات الضخمة (Big Data)','دالة التجزئة','التوقيع الرقمي','البروتوكول'], a:0},
+{t:'32- تقنية تهدف لتقليد السلوك الفكري البشري بشكل اصطناعي في الآلات تسمى:', o:['الذكاء الاصطناعي (AI)','التعلم الآلي','البيانات الضخمة','إنترنت الأشياء'], a:0},
+{t:'33- فرع من الذكاء الاصطناعي تتعلم فيه الحواسيب من البيانات لاستخراج القواعد والأنماط يسمى:', o:['التعلم الآلي (Machine Learning)','البيانات الضخمة','دالة التجزئة','الواقع الافتراضي'], a:0},
+{t:'34- من التطبيقات العملية للذكاء الاصطناعي المذكورة:', o:['القيادة الذاتية والطب عن بعد والزراعة الذكية','التشفير المتناظر فقط','التوقيع الرقمي فقط','جهة التصديق فقط'], a:0},
+{t:'35- تقنية ربط الأجهزة المنزلية والخاصر بالإنترنت لتمكين التواصل وخدمة المستخدم تسمى:', o:['إنترنت الأشياء (IoT)','الواقع الافتراضي','الواقع المعزز','البيانات الضخمة'], a:0},
+{t:'36- مسكن يدمج تقنيات AI وIoT لتوفير حياة أكثر راحة وأمانًا يسمى:', o:['المنزل الذكي (Smart Home)','المجتمع الصناعي','مجتمع المعلومات','Society 1.0'], a:0},
+{t:'37- تقنية تخلق وهمًا كاملًا ببيئة محاكاة رقمية تسمى:', o:['الواقع الافتراضي (VR)','الواقع المعزز','إنترنت الأشياء','الذكاء الاصطناعي'], a:0},
+{t:'38- تقنية تستخدم معالجة الكمبيوتر لتعزيز البيئة الواقعية التي نراها بحواسنا تسمى:', o:['الواقع الافتراضي','الواقع المعزز (AR)','إنترنت الأشياء','البيانات الضخمة'], a:1},
+{t:'39- الآثار الجانبية السلبية للتطور السريع على الصحة الجسدية والنفسية والمساواة تسمى:', o:['تحديات العصر الرقمي','فوائد العصر الرقمي فقط','التشفير الرقمي','التوقيع الرقمي'], a:0},
+{t:'40- يشمل الإجهاد التكنولوجي رهاب التكنولوجيا (خوف) والإدمان التكنولوجي (اعتماد مفرط).', o:['صح','خطأ'], a:0},
+{t:'41- مشاكل جسدية مثل تصلب الكتف وإجهاد العين الناتج عن استخدام الشاشات تسمى:', o:['اضطراب VDT','الفجوة الرقمية','الإجهاد التكنولوجي فقط','الصحة النفسية فقط'], a:0},
+{t:'42- التباين بين من يملكون القدرة على الوصول للتكنولوجيا ومن لا يملكونها يسمى:', o:['الفجوة الرقمية','اضطراب VDT','الإجهاد التكنولوجي','الصحة النفسية'], a:0},
+{t:'43- القلق الناتج عن عدم الثقة في التعامل مع الحواسيب أو الشعور بعدم الارتياح يُصنّف ضمن:', o:['الصحة النفسية','الفجوة الرقمية فقط','اضطراب VDT فقط','البيانات الضخمة'], a:0},
+{t:'44- مصطلح "تصلب الكتف" بسبب استخدام الكمبيوتر يرتبط بشكل مباشر باضطراب:', o:['VDT','AI','IoT','SSL'], a:0},
+{t:'45- ضرورة الموازنة بين التطور التكنولوجي المتسارع وإجراءات السلامة (التشفير والتوقيع الرقمي) تسمى:', o:['التوازن','الاستشراف','رسالة ختامية','الوعي'], a:0},
+{t:'46- فهم المخاطر الصحية (الإجهاد التكنولوجي) والسعي لتقليل الفجوة الرقمية في مجتمعنا يسمى:', o:['الوعي','التوازن','الاستشراف','الفجوة الرقمية'], a:0},
+{t:'47- الاستعداد للعيش في مجتمع 5.0 الذي يستغل الذكاء الاصطناعي والبيانات الضخمة لخدمة الإنسان يسمى:', o:['الاستشراف','التوازن','الوعي','الإجهاد التكنولوجي'], a:0},
+{t:'48- طالب شعر بالقلق وعدم الراحة عند التعامل مع جهاز حاسوب جديد دون سبب واضح، هذا مثال على:', o:['الصحة النفسية المرتبطة بالتكنولوجيا','اضطراب VDT','الفجوة الرقمية','دالة التجزئة'], a:0},
+{t:'49- مستخدم استخدم تطبيقًا يدمج بيانات افتراضية مع الكاميرا الحقيقية لهاتفه لإضافة عناصر رقمية على العالم الواقعي، فإنه استخدم تقنية:', o:['الواقع المعزز (AR)','الواقع الافتراضي (VR)','إنترنت الأشياء','التشفير'], a:0},
+{t:'50- رسالة الخاتمة الأساسية للموضوع هي أن التكنولوجيا أداة قوية، وسلامتها تبدأ من وعي الفرد بمبادئها.', o:['صح','خطأ'], a:0}
+];
+
+const allQuestions = section1.concat(section2);
+const container = document.getElementById('questions');
+const letters = ['أ','ب','ج','د'];
+
+function renderSection(title, list, startIndex){
+  const h = document.createElement('div');
+  h.className='section-title'; h.textContent=title;
+  container.appendChild(h);
+  list.forEach((q,i)=>{
+    const idx=startIndex+i;
+    const box=document.createElement('div');
+    box.className='q'; box.dataset.index=idx;
+    const qt=document.createElement('div');
+    qt.className='q-text'; qt.textContent=q.t;
+    box.appendChild(qt);
+    q.o.forEach((opt,oi)=>{
+      const label=document.createElement('label');
+      label.className='opt';
+      label.innerHTML=`<input type="radio" name="q${idx}" value="${oi}"> ${q.o.length>2? letters[oi]+') ':''}${opt}`;
+      box.appendChild(label);
+    });
+    container.appendChild(box);
+  });
+}
+
+renderSection('القسم الأول: التشفير، التوقيع الرقمي، وجهات التصديق (1–25)', section1, 0);
+renderSection('القسم الثاني: تطور المجتمعات، البيانات الضخمة والذكاء الاصطناعي، وتحديات العصر الرقمي (26–50)', section2, 25);
+
+container.addEventListener('change',()=>{
+  const answered=document.querySelectorAll('#questions input[type=radio]:checked').length;
+  document.getElementById('progress-fill').style.width=(answered/allQuestions.length*100)+'%';
+});
+
+document.getElementById('quiz-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  const answered=document.querySelectorAll('#questions input[type=radio]:checked').length;
+  const missingMsg=document.getElementById('missing-msg');
+  if(answered<allQuestions.length){missingMsg.style.display='block';return;}
+  missingMsg.style.display='none';
+  let score=0;
+  allQuestions.forEach((q,idx)=>{
+    const box=document.querySelector(`.q[data-index="${idx}"]`);
+    const chosen=document.querySelector(`input[name="q${idx}"]:checked`);
+    const chosenVal=parseInt(chosen.value);
+    box.querySelectorAll('.opt').forEach((optEl,oi)=>{
+      if(oi===q.a) optEl.classList.add('correct');
+      if(oi===chosenVal && chosenVal!==q.a) optEl.classList.add('wrong');
+    });
+    if(chosenVal===q.a) score++;
+  });
+  document.getElementById('score-text').textContent=`النتيجة: ${score} من ${allQuestions.length}`;
+  document.getElementById('result').style.display='block';
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true; btn.textContent='تم التسليم'; btn.style.background='#8a8578';
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script>
+</body>
+</html>
